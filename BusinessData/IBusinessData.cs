@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessData
+﻿namespace BusinessData
 {
+    using System;
+    using System.Data;
+
     public interface IBusinessData
     {
-        Int64 CreateUser();
+        Object CreateUser(DataRow dr);
 
-        Object GetUsers();
+        Object GetUsers(long userId);
 
        
     }

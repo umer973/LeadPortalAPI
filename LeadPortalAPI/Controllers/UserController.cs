@@ -3,6 +3,8 @@ namespace LeadPortalAPI.Controllers
 {
     using System.Web.Http;
     using BusinessData;
+    using System.Data;
+
     public class UserController : ApiController
     {
         IBusinessData ibusiness;
@@ -18,15 +20,15 @@ namespace LeadPortalAPI.Controllers
         }
 
         [Route("api/GetUsers")]
-        public IHttpActionResult GetUsers()
+        public IHttpActionResult GetUsers(long userId)
         {
-            return Ok(ibusiness.GetUsers());
+            return Ok(ibusiness.GetUsers(userId));
         }
 
         [Route("api/CreateUser")]
-        public IHttpActionResult POST()
+        public IHttpActionResult POST(DataTable dt)
         {
-            return Ok(ibusiness.CreateUser());
+            return Ok(ibusiness.CreateUser(dt.Rows[0]));
         }
     }
 }
