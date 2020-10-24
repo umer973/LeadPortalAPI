@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace LeadPortalAPI
 {
@@ -17,9 +18,16 @@ namespace LeadPortalAPI
           
             var JSON = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             JSON.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+
             config.MessageHandlers.Add(new WrappingHandler());
 
             config.Filters.Add(new Attributes.APIExceptionFilterAttribute());
+
+
+            var cors = new EnableCorsAttribute("*", "*", "*");// { SupportsCredentials=true};
+            config.EnableCors(cors); /// Not required in token calling
+
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

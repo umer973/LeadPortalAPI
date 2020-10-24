@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 
 namespace LeadPortalAPI.Helper
 {
@@ -24,8 +25,8 @@ namespace LeadPortalAPI.Helper
         private static HttpResponseMessage BuildApiResponse(HttpRequestMessage request, HttpResponseMessage response, bool isLicenseValid)
         {
             object content = null; ;
-            ///string errorMessage = null;
-            //HttpError error = null;
+            string errorMessage = null;
+            HttpError error = null;
             int ValidationMessageType = 1; // enum ValidationMessageType        
             bool IsAPIException = false;
 
@@ -81,16 +82,14 @@ namespace LeadPortalAPI.Helper
 
             foreach (var header in response.Headers)
             {
-                newResponse.Headers.Add(header.Key, header.Value);
+               newResponse.Headers.Add(header.Key, header.Value);
             }
 
-
-
-            //if (error != null)
-            //{
-            //    newResponse.Headers.Add("ExceptionType", error.ExceptionType);
-            //    newResponse.Headers.Add("ExceptionMessage", error.ExceptionMessage);
-            //}
+            if (error != null)
+            {
+                newResponse.Headers.Add("ExceptionType", error.ExceptionType);
+                newResponse.Headers.Add("ExceptionMessage", error.ExceptionMessage);
+            }
 
             return newResponse;
         }
