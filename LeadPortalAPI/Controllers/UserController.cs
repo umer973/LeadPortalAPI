@@ -4,6 +4,7 @@ namespace LeadPortalAPI.Controllers
     using System.Web.Http;
     using BusinessData;
     using System.Data;
+    using BusinessData.Models;
 
     public class UserController : ApiController
     {
@@ -26,9 +27,16 @@ namespace LeadPortalAPI.Controllers
         }
 
         [Route("api/CreateUser")]
-        public IHttpActionResult POST(DataTable dt)
+        public IHttpActionResult POST(Users user)
         {
-            return Ok(ibusiness.CreateUser(dt.Rows[0]));
+            return Ok(ibusiness.CreateUser(user));
+        }
+
+        [HttpPost]
+        [Route("api/PostLogin")]
+        public IHttpActionResult PostLogin(Users user)
+        {
+            return Ok(ibusiness.GetLogin(user));
         }
     }
 }

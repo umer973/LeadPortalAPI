@@ -4,6 +4,7 @@ using System;
 
 namespace BusinessData
 {
+    using Models;
     using System.Data;
 
     public class BusinessData : IBusinessData
@@ -16,7 +17,7 @@ namespace BusinessData
         public DataSet dsResult = new DataSet();
 
 
-        public object CreateUser(DataRow dr)
+        public object CreateUser(Users users)
         {
             Int64 Result = 0;
             try
@@ -27,26 +28,26 @@ namespace BusinessData
                     switch (Item.ParameterName)
                     {
                         case "UserName":
-                            Item.Value = dr["userName"];
+                            Item.Value = users.userName;
 
                             break;
                         case "Password":
-                            Item.Value = dr["password"];
+                            Item.Value = users.password;
                             break;
                         case "Email":
-                            Item.Value = dr["email"];
+                            Item.Value = users.email;
                             break;
                         case "ContactNo":
-                            Item.Value = dr["contactNo"];
+                            Item.Value = users.contactNo;
                             break;
                         case "IsAdmin":
-                            Item.Value = dr["contactNo"];
+                            Item.Value = 1;
                             break;
                         case "DataVisibility":
-                            Item.Value = dr["contactNo"];
+                            Item.Value = 1;
                             break;
                         case "IsActive":
-                            Item.Value = dr["contactNo"];
+                            Item.Value = 1;
                             break;
 
                     }
@@ -124,6 +125,43 @@ namespace BusinessData
             return objResult;
         }
 
+
+        public object GetLogin(Users user)
+        {
+            try
+            {
+                con = DALHelper.GetConnection();
+                IDbDataParameter[] paramData;
+                DataSet dsResult = new DataSet();
+
+                paramData = DALHelperParameterCache.GetSpParameterSet(con, "GetLogin"); foreach (IDbDataParameter Item in paramData)
+                {
+                    switch (Item.ParameterName)
+                    {
+
+                        case "UserName":
+                            Item.Value = user.userName;
+                            break;
+                        case "Password":
+                            Item.Value = user.password;
+                            break;
+                        case "contactNo":
+                            Item.Value = user.contactNo;
+                            break;
+                    }
+
+                }
+
+                DALHelper.FillDataset(con, CommandType.StoredProcedure, "GetLogin", dsResult, new string[] { "Users" }, paramData);
+
+                return dsResult.Tables.Contains("Users") ? dsResult.Tables["Users"] : null;
+            }
+            catch (Exception ex)
+            {
+                // ErrorLogDL.InsertErrorLog(ex.Message, "RegisterTravellerUser");
+                throw ex;
+            }
+        }
 
     }
 }
