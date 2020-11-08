@@ -8,12 +8,13 @@ namespace BusinessData.Models
 {
     public class Users
     {
+        public string userId { get; set; }
         public string userName { get; set; }
         public string email { get; set; }
         public string contactNo { get; set; }
         public string password { get; set; }
-        public string isAdmin { get; set; }
-        public string isActive { get; set; }
+        public int isAdmin { get; set; }
+        public int isActive { get; set; }
         public int dataVisibility { get; set; }
 
     }

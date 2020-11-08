@@ -27,6 +27,10 @@ namespace BusinessData
                 {
                     switch (Item.ParameterName)
                     {
+                        case "UserId":
+                            Item.Value = users.userId;
+
+                            break;
                         case "UserName":
                             Item.Value = users.userName;
 
@@ -41,13 +45,13 @@ namespace BusinessData
                             Item.Value = users.contactNo;
                             break;
                         case "IsAdmin":
-                            Item.Value = 1;
+                            Item.Value = users.isAdmin;
                             break;
                         case "DataVisibility":
-                            Item.Value = 1;
+                            Item.Value = users.dataVisibility;
                             break;
                         case "IsActive":
-                            Item.Value = 1;
+                            Item.Value = users.isActive;
                             break;
 
                     }
@@ -57,11 +61,11 @@ namespace BusinessData
 
                 if (Result > 0)
                 {
-                    objResult = "200"; // Data Saved;
+                    objResult = "User Created Successfully";
                 }
                 else
                 {
-                    objResult = "201"; // Not Saved;
+                    objResult = "Not Saved";
                 }
             }
             catch (Exception ex)
@@ -70,7 +74,7 @@ namespace BusinessData
 
                 if (ex.Message.Contains("UNIQUE KEY"))
                 {
-                    objResult = "300";  // Existing
+                    objResult = "User Already Exists";
                 }
                 else
                 {
